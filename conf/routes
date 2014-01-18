@@ -5,5 +5,11 @@
 # Home page
 GET     /                           controllers.Application.index
 
+# Music Player Controlls
+POST	/player/play				controllers.Application.playMusic 
+POST	/player/pause				controllers.Application.pauseMusic
+
+GET		/player/playlist			controllers.Application.getCurrentPlaylist
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
