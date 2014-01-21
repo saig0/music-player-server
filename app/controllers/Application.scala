@@ -16,19 +16,4 @@ object Application extends Controller {
 	def index = Action {
 		Ok(views.html.index("Your new application is ready."))
 	}
-
-	def getCurrentPlaylist = Action {
-		val currentPlaylist = musicPlayer.currentPlaylist
-		Ok(currentPlaylist.toString)
-	}
-
-	def playMusic = Action {
-		musicPlayer.play
-		Ok
-	}
-
-	def pauseMusic = Action {
-		musicPlayer.pause
-		Ok
-	}
 }

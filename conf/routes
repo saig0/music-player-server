@@ -6,10 +6,13 @@
 GET     /                           controllers.Application.index
 
 # Music Player Controlls
-POST	/player/play				controllers.Application.playMusic 
-POST	/player/pause				controllers.Application.pauseMusic
+POST	/player/play				controllers.MusicPlayerApplication.playMusic 
+POST	/player/pause				controllers.MusicPlayerApplication.pauseMusic
+POST	/player/stop				controllers.MusicPlayerApplication.stopMusic
+POST	/player/next				controllers.MusicPlayerApplication.playNextMusic
+POST	/player/previous			controllers.MusicPlayerApplication.playPreviousMusic
 
-GET		/player/playlist			controllers.Application.getCurrentPlaylist
+GET		/player/playlist			controllers.MusicPlayerApplication.getCurrentPlaylist
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
