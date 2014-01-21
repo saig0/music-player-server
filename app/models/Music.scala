@@ -6,6 +6,7 @@ import javafx.scene.media.Media
 import javafx.scene.media.MediaPlayer
 import scala.collection.JavaConverters._
 import controllers.JavaScalaUtil._
+import play.api.libs.json.Json
 
 case class Music(val source: String, val artist: String, val album: String, val title: String)
 
@@ -16,7 +17,8 @@ object Music {
 		val artist, album, title = Value
 	}
 
-	def apply(file: Path) = {
+	// apply geht nicht wegen Json Macro
+	def create(file: Path) = {
 		val source = file.toString
 		val metadata = getMetadata(file)
 		val artist = metadata("artist").toString
@@ -38,4 +40,7 @@ object Music {
 
 		media.getMetadata.asScala.toMap
 	}
+
+	implicit val musicReads = Json.reads[Music]
+	implicit val musicWrites = Json.writes[Music]
 }

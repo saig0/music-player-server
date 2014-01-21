@@ -4,6 +4,7 @@ import play.api._
 import play.api.mvc._
 import controllers.music.MusicPlayer
 import controllers.music.MusicLibrary
+import play.api.libs.json.Json
 
 object MusicPlayerApplication extends Controller {
 
@@ -15,7 +16,7 @@ object MusicPlayerApplication extends Controller {
 
 	def getCurrentPlaylist = Action {
 		val currentPlaylist = musicPlayer.currentPlaylist
-		Ok(currentPlaylist.toString)
+		Ok(Json.toJson(currentPlaylist))
 	}
 
 	def playMusic = Action {

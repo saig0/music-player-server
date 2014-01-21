@@ -60,7 +60,7 @@ class MusicLibrary {
 
 	def addSource(source: String) {
 		visitMusicFiles(source, { file =>
-			musics ++= Music(file) :: Nil
+			musics ++= Music.create(file) :: Nil
 		})
 	}
 }
