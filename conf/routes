@@ -13,6 +13,11 @@ POST	/player/next				controllers.MusicPlayerApplication.playNextMusic
 POST	/player/previous			controllers.MusicPlayerApplication.playPreviousMusic
 
 GET		/player/playlist			controllers.MusicPlayerApplication.getCurrentPlaylist
+POST	/player/playlist			controllers.MusicPlayerApplication.addMusicToCurrentPlaylist
+
+# Music Library
+GET		/library					controllers.MusicLibraryApplication.getAll
+POST	/library/source				controllers.MusicLibraryApplication.addSource
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
