@@ -8,13 +8,28 @@ import scala.collection.JavaConverters._
 import controllers.JavaScalaUtil._
 import play.api.libs.json.Json
 
-case class Music(val source: String, val artist: String, val album: String, val title: String)
+case class Music(id: Long, val source: String, val artist: String, val album: String, val title: String)
 
 object Music {
 
-	object MusicMetadata extends Enumeration {
-		type TrackMetadata = Value
-		val artist, album, title = Value
+	import anorm._
+	import anorm.SqlParser._
+	import play.api.db._
+	import play.api.Play.current
+
+	val music = {
+		get[Long]("id") ~
+			get[String]("source") ~
+			get[String]("artist") ~
+			get[String]("album") ~
+			get[String]("title") map {
+				case id ~ source ~ artist ~ album ~ title =>
+					Music(id, source, artist, album, title)
+			}
+	}
+
+	def all: List[Music] = DB.withConnection { implicit c =>
+		SQL("select * from music").as(music *)
 	}
 
 	// apply geht nicht wegen Json Macro
@@ -25,7 +40,18 @@ object Music {
 		val album = metadata("album").toString
 		val title = metadata("title").toString
 
-		new Music(source, artist, album, title)
+		val id = DB.withConnection { implicit c =>
+			SQL("insert into music (source, artist, album, title) values ({source}, {artist}, {album}, {title})").on(
+				'source -> source,
+				'artist -> artist,
+				'album -> album,
+				'title -> title
+			).executeInsert() match {
+					case Some(id) => id
+					case None => 0
+				}
+		}
+		new Music(id, source, artist, album, title)
 	}
 
 	private def getMetadata(file: Path) = {

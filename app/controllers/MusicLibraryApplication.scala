@@ -5,6 +5,7 @@ import play.api.mvc._
 import controllers.music.MusicPlayer
 import controllers.music.MusicLibrary
 import play.api.libs.json.Json
+import models.Music
 
 object MusicLibraryApplication extends Controller with JsonRequest {
 
@@ -18,6 +19,6 @@ object MusicLibraryApplication extends Controller with JsonRequest {
 	}
 
 	def getAll = Action {
-		Ok(Json.toJson(musicLibrary.musics))
+		Ok(Json.toJson(Music.all))
 	}
 }

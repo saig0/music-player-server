@@ -56,12 +56,8 @@ class MusicLibrary {
 
 	var sources = List[String]()
 
-	var musics = List[Music]()
-
 	def addSource(source: String) {
-		visitMusicFiles(source, { file =>
-			musics ++= Music.create(file) :: Nil
-		})
+		visitMusicFiles(source, file => Music.create(file))
 	}
 }
 
