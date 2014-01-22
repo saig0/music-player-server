@@ -21,4 +21,12 @@ object MusicLibraryApplication extends Controller with JsonRequest {
 	def getAll = Action {
 		Ok(Json.toJson(Music.all))
 	}
+
+	def getArtists = Action {
+		Ok(Json.toJson(Music.artists))
+	}
+
+	def getAlbumsOfArtist(artist: String) = Action {
+		Ok(Json.toJson(Music.albumsOfArtist(artist)))
+	}
 }

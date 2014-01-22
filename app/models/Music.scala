@@ -32,6 +32,16 @@ object Music {
 		SQL("select * from music").as(music *)
 	}
 
+	def artists: List[String] = DB.withConnection { implicit c =>
+		SQL("select distinct artist from music").as(scalar[String] *)
+	}
+
+	def albumsOfArtist(artist: String): List[String] = DB.withConnection { implicit c =>
+		SQL("select distinct album from music where lower(artist) like {artist}").on(
+			'artist -> ("%" + artist.toLowerCase + "%")
+		).as(scalar[String] *)
+	}
+
 	// apply geht nicht wegen Json Macro
 	def create(file: Path) = {
 		val source = file.toString
