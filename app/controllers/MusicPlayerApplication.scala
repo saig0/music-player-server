@@ -18,7 +18,8 @@ object MusicPlayerApplication extends Controller with JsonRequest {
 	}
 
 	def addMusicToCurrentPlaylist = Action(parse.json) { implicit request =>
-		jsonRequest[List[Music]] { musics =>
+		jsonRequest[List[Long]] { musicIds =>
+			val musics = musicIds map (id => Music.findById(id))
 			musicPlayer.add(musics)
 			Ok
 		}

@@ -32,6 +32,12 @@ object Music {
 		SQL("select * from music").as(music *)
 	}
 
+	def findById(id: Long): Music = DB.withConnection { implicit c =>
+		SQL("select * from music where id = {id}").on(
+			'id -> id
+		).as(music.single)
+	}
+
 	def artists: List[String] = DB.withConnection { implicit c =>
 		SQL("select distinct artist from music").as(scalar[String] *)
 	}
